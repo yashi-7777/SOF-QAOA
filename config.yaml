@@ -1,0 +1,30 @@
+# ---- cipher ----
+block_size: 16
+rounds: 2
+sbox: keyed              # keyed | identity   (identity = ablation)
+global_chain: true       # false = diagnostic only (no global diffusion)
+rgb_coupling: false      # DEFAULT OFF: measured redundant in the full system (see REPORT E5); true -> bit zR is a free variable
+xy_mode: full            # full | x_only | y_only        (X/Y operator ablations)
+tie_xy: false            # true  -> constraint zX == zY   (no directional asymmetry)
+nonce_mode: siv          # siv = HMAC(key, plaintext) ; fixed = key-only nonce (pure-cipher diffusion tests)
+
+# ---- operator-field selection ----
+selector: qaoa           # qaoa | exact_window | sa_window | ls_window | random_window | sa_full | ls_full | greedy | random | fixed | fixed_max
+window_shape: [2, 2]     # blocks per QAOA sub-problem -> 4 bits/block -> 16 qubits
+sweeps: 2                # Gauss-Seidel sweeps over the window grid
+weights:
+  term_weights: {T1_deficit: 0.25, T2_boundary: 0.25, T3_diversity: 0.25, T4_budget: 0.25}   # simplex; terms are range-normalised
+  budget_frac: 0.6       # target ops = min + frac*(max-min)
+qaoa:
+  p: 2
+  maxiter: 40            # COBYLA iterations (one circuit evaluation each)
+  shots: 128
+  restarts: 1
+  backend: numpy         # numpy | pennylane (validated equivalent in tests)
+full_budget: 6000        # cost evaluations for whole-image classical baselines
+
+# ---- experiments ----
+experiments:
+  image_size: 128
+  npcr_trials: 4
+  seed: 2026

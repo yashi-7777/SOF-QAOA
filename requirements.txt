@@ -1,0 +1,11 @@
+numpy>=1.26
+scipy>=1.11
+pillow>=10.0
+matplotlib>=3.8
+pyyaml>=6.0
+pandas>=2.0
+pytest>=8.0
+# optional: cross-check QAOA against PennyLane's simulator / future hardware backends
+pennylane>=0.38
+# optional: bundled sample photos (astronaut, chelsea, coffee) for experiments
+scikit-image>=0.22
